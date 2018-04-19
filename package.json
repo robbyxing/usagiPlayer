@@ -1,0 +1,25 @@
+{
+  "name": "usagi_player",
+  "version": "1.0.0",
+  "description": "a html5 video player, support live stream.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
+  },
+  "keywords": [
+    "video",
+    "player",
+    "html5"
+  ],
+  "author": "robbyxing",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "normalize.css": "^8.0.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
+  }
+}

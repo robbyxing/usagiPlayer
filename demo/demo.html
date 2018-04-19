@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UsagiPlayer Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../node_modules/normalize.css/normalize.css" />
+    <link rel="stylesheet" href="icono.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./demo.css" />
+    <script src="../dist/usagiplayer.min.js"></script>
+</head>
+<body>
+    <div>
+        <video id="player" src="peppa.mp4" autoplay width="100%">
+            您的浏览器不支持 video 标签。
+        </video>
+        <ul class="usagi-player-controls">
+            <li class="usagi-player-play-btn"><i class="icono-play"></i></li>
+            <li class="usagi-player-current-time">00:00:00</li>
+            <li class="usagi-player-progressbar">
+                <div class="usagi-player-progressbar-slot"></div>
+                <div class="usagi-player-progressbar-played"></div>
+                <div class="usagi-player-progressbar-buffered"></div>
+            </li>
+            <li class="usagi-player-total-time">00:00:00</li>
+        </ul>
+    </div>
+    
+</body>
+<script>
+    //var player = new UsagiPlayer();
+    //console.log(player);
+    var now = 0;
+    var timer = setInterval(function() {
+        if(now == 100) {
+            clearInterval(timer);
+            window.location.href = '#';
+        } else {
+            now += 1;
+            progressfn(now);
+        }
+    }, 50);
+    function progressfn(cent) {
+        var progress = document.querySelector('.usagi-player-progressbar-played');
+        progress.style.width = cent + '%';
+    }
+</script>
+</html>

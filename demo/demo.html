@@ -6,34 +6,40 @@
     <title>UsagiPlayer Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../node_modules/normalize.css/normalize.css" />
-    <link rel="stylesheet" href="icono.min.css">
+
     <link rel="stylesheet" type="text/css" media="screen" href="./demo.css" />
     <script src="../dist/usagiplayer.min.js"></script>
+
+    <link rel="stylesheet" href="icono.min.css">
+
 </head>
+
 <body>
     <div>
-        <video id="player" src="peppa.mp4" autoplay width="100%">
+        <video id="player" src="peppa.mp4" width="100%">
             您的浏览器不支持 video 标签。
         </video>
         <ul class="usagi-player-controls">
-            <li class="usagi-player-play-btn"><i class="icono-play"></i></li>
-            <li class="usagi-player-current-time">00:00:00</li>
+            <li class="usagi-player-play-btn">
+                <i class="icon-play"></i>
+            </li>
+            <li class="usagi-player-current-time">--:--:--</li>
             <li class="usagi-player-progressbar">
+                <div class="usagi-player-progressbar-position"></div>
                 <div class="usagi-player-progressbar-slot"></div>
                 <div class="usagi-player-progressbar-played"></div>
                 <div class="usagi-player-progressbar-buffered"></div>
             </li>
-            <li class="usagi-player-total-time">00:00:00</li>
+            <li class="usagi-player-total-time">--:--:--</li>
         </ul>
     </div>
-    
 </body>
 <script>
     //var player = new UsagiPlayer();
     //console.log(player);
     var now = 0;
-    var timer = setInterval(function() {
-        if(now == 100) {
+    var timer = setInterval(function () {
+        if (now == 100) {
             clearInterval(timer);
             window.location.href = '#';
         } else {
@@ -41,9 +47,26 @@
             progressfn(now);
         }
     }, 50);
+
+    var video = document.querySelector('#player');
+
+    video.addEventListener('load', function () {
+        console.log(123);
+        document.querySelector('.usagi-player-current-time').innerHTML = '00:00:00';
+        document.querySelector('.usagi-player-total-time').innerHTML = video.duration;
+    });
+
+
     function progressfn(cent) {
         var progress = document.querySelector('.usagi-player-progressbar-played');
+        var position = document.querySelector('.usagi-player-progressbar-position');
+        position.addEventListener('mousemove', function (e) {
+            //console.log(e.target);
+            //position.style.left = e.target.offsetLeft;
+        });
+        position.style.left = cent + '%';
         progress.style.width = cent + '%';
     }
 </script>
+
 </html>

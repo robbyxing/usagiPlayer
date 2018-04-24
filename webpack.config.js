@@ -2,7 +2,7 @@ var webpack = require("webpack");
 
 module.exports = {
   entry: {
-    'UsagiPlayer': "./src/index.js"
+    UsagiPlayer: "./src/index.js"
   },
   output: {
     path: __dirname + "/dist",

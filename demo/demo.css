@@ -1,7 +1,64 @@
 /*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}img,embed,iframe,object,audio,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}
 
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
 .icon {
-  transform: scale(0.5);
+  transform: scale(0.4);
   margin: -5px 0 -5px 0;
 }
 .icon-play {
@@ -51,11 +108,14 @@
 }
 
 ul.usagi-player-controls {
-  margin: 0;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 40px;
-  background-color: #969696;
   list-style-type: none;
+  opacity: 0;
+  background: url('player_bg.png') repeat-x bottom;
+  z-index: 2147483649;
 }
 
 ul.usagi-player-controls li {
@@ -65,12 +125,33 @@ ul.usagi-player-controls li {
   color: #fff;
   line-height: 40px;
   text-align: center;
-  margin: 0 10px 0 10px;
+}
+
+.usagi-player{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.usagi-player-video{
+  height: 100%;
+}
+
+.usagi-player-video video{
+  width: 100%;
+}
+
+.usagi-player-current-time{
+  margin: 0 10px 0 0;
+}
+
+.usagi-player-total-time{
+  margin: 0 0 0 10px;
 }
 
 .usagi-player-progressbar {
   position: relative;
-  min-width: 60%;
+  min-width: 40%;
   max-width: 70%;
 }
 
@@ -126,6 +207,41 @@ ul.usagi-player-controls li {
   right: -5px;
   top: -4px;
   cursor: pointer;
+}
+
+.usagi-player-info-container{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(0,0,0,0.2);
+  opacity: 0;
+  z-index: 2147483648;
+}
+
+.usagi-player-info-container .center-play-btn{
+    position: absolute;
+    transform: scale(1);
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+}
+
+.usagi-player-danmaku-container{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 2147483648;
+}
+
+.usagi-player-danmaku{
+  position: absolute;
+  right: 0;
+  color: #ddd;
+  font-size: 22px;
 }
 
 @-webkit-keyframes process{

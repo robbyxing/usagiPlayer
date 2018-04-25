@@ -15,16 +15,17 @@ export default class Player {
     let df = document.createDocumentFragment();
 
     let container = this.createEl("div", "usagi-player");
-    container.appendChild(video.cloneNode(true));
 
-    let danmaku_canvas = this.createEl("canvas", "usagi-player-danmaku-canvas");
-    danmaku_canvas.width = "882";
-    danmaku_canvas.height = "496";
-    danmaku_canvas.style.position = "absolute";
-    danmaku_canvas.style.left = 0;
-    
-    danmaku_canvas.style.height = video.style.height;
-    container.appendChild(danmaku_canvas);
+
+    let video_container = this.createEl("div", "usagi-player-video");
+    video_container.appendChild(video.cloneNode(true));
+    let danmaku_container = this.createEl("div", "usagi-player-danmaku-container");
+    video_container.appendChild(danmaku_container);
+    let info_container = this.createEl("div", "usagi-player-info-container");
+    video_container.appendChild(info_container);
+
+    container.appendChild(video_container);
+
 
     let controls = this.createEl("ul", "usagi-player-controls");
 
@@ -72,12 +73,16 @@ export default class Player {
     df.appendChild(container);
     video.before(df);
 
-    document.body.removeChild(video);
+    video.parentNode.removeChild(video);
 
     this.video = document.getElementById(this.options.id);
 
+    let center_play_btn = this.createEl("div", "icon icon-play-circle center-play-btn");
+
+
     let play_fn = () => {
       this.video.play();
+      //this.video.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     };
 
     let pause_fn = () => {
@@ -86,32 +91,35 @@ export default class Player {
 
     play_btn.addEventListener("click", play_fn);
 
+
+
     this.on("canplay", () => {
       total_time.innerHTML = this.timeConvert(parseInt(this.video.duration));
 
-      var ctx = danmaku_canvas.getContext("2d");
-      ctx.font="22px Georgia";
+      //danmaku_container.style.height = video.style.height;
+      console.log(this.video.height)
 
-      ctx.fillStyle = '#fff';
-
-      ctx.fillText('我小猪佩奇就是不服!', 20, 100);
-
-
-      ctx.translate(400,0);  
- 
     });
 
     let progress_timer;
 
     this.on("play", () => {
+
+      info_container.style.opacity = 0;
+      try{
+        info_container.removeChild(center_play_btn);
+      }catch(e){
+
+      }
+
       play_btn.setAttribute("class", "usagi-player-pause-btn");
       play_btn.innerHTML = '<div class="icon icon-pause"></div>';
       play_btn.removeEventListener("click", play_fn);
       play_btn.addEventListener("click", pause_fn);
 
-      
+      context.createDanmaku("弹幕测试", "#fff");
 
-      progress_timer = setInterval(function() {
+      progress_timer = setInterval(function () {
         let current_time_value = parseInt(context.video.currentTime);
         current_time.innerHTML = context.timeConvert(current_time_value);
         let cent = current_time_value / parseInt(context.video.duration) * 100;
@@ -120,6 +128,10 @@ export default class Player {
     });
 
     this.on("pause", () => {
+
+      info_container.style.opacity = 1;
+      info_container.appendChild(center_play_btn);
+
       play_btn.setAttribute("class", "usagi-player-play-btn");
       play_btn.innerHTML = '<div class="icon icon-play"></div>';
       play_btn.removeEventListener("click", pause_fn);
@@ -127,6 +139,52 @@ export default class Player {
 
       progress_timer && clearInterval(progress_timer);
     });
+
+    if(this.options.controller.embed){
+      container.addEventListener("mousemove", () => {
+        controls.setAttribute("class", 'usagi-player-controls animated fadeIn');
+      });
+  
+      container.addEventListener("mouseleave", () => {
+        controls.setAttribute("class", 'usagi-player-controls animated fadeOut');
+      });
+    }else{
+      controls.style.opacity = 1;
+      controls.style.bottom = "-40px";
+    }
+
+
+
+  }
+
+  createDanmaku(text, color) {
+    let danmaku = this.createEl("div", "usagi-player-danmaku");
+
+
+    /*
+    let ctx = this.danmaku_canvas.getContext("2d");
+    ctx.font="22px Georgia";
+    ctx.fillStyle = color;
+    ctx.fillText(text, 700, 20);
+    ctx.current_x = 700;
+    ctx.current_y = 0;
+    
+    console.log(ctx);
+    
+    let timer = setInterval(function(){
+      if(ctx.current_x > 0){
+        ctx.current_x -= 10;
+        console.log(ctx.current_x);
+        ctx.translate(-10,0); 
+      }else{
+        clearInterval(timer);
+      }
+        
+    }, 50);
+    */
+
+
+
   }
 
   createEl(tag, class_name) {
@@ -178,9 +236,9 @@ export default class Player {
       "waiting"
     ];
 
-    video_events.indexOf(event_name) > -1
-      ? this.video.addEventListener(event_name, callback)
-      : this.events.on(event_name, callback);
+    video_events.indexOf(event_name) > -1 ?
+      this.video.addEventListener(event_name, callback) :
+      this.events.on(event_name, callback);
   }
 
   init() {}

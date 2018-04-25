@@ -8,17 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./demo.css" />
     <script src="../dist/usagiplayer.min.js"></script>
+    <style>
+        .video-box{
+            width: 568px;
+            height: 320px;
+        }
+    </style>
 </head>
 <body>
-    <video id="player" src="peppa.mp4" width="100%"></video>
+    <div class="video-box">
+        <video id="player" src="peppa.mp4"></video>
+    </div>
 </body>
 <script>
     var player = new UsagiPlayer({
         id: 'player',
+        height: '400px',
+        width: '100%',
         video: {
 
         },
         controller: {
+            embed: true,
             play_btn: true,
         },
         danmaku: {

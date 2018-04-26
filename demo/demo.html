@@ -7,20 +7,35 @@
     <title>UsagiPlayer Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./demo.css" />
+    <script src="flv.min.js"></script>
     <script src="../dist/usagiplayer.min.js"></script>
     <style>
-        .video-box{
+        .video-box {
             width: 568px;
             height: 320px;
         }
     </style>
 </head>
+
 <body>
     <div class="video-box">
         <video id="player" src="peppa.mp4"></video>
     </div>
 </body>
 <script>
+    /*
+        if (flvjs.isSupported()) {
+            var videoElement = document.getElementById('player');
+            var flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                url: 'peppa.flv'
+            });
+            flvPlayer.attachMediaElement(videoElement);
+            flvPlayer.load();
+            flvPlayer.play();
+        }
+        */
+
     var player = new UsagiPlayer({
         id: 'player',
         height: '400px',
@@ -29,11 +44,11 @@
 
         },
         controller: {
-            embed: true,
+            embed: false,
             play_btn: true,
         },
         danmaku: {
-            container: '',
+            font_size : 22,
             ws_url: ''
         }
     });
